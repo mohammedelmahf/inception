@@ -2,8 +2,8 @@
 set -e
 
 
-echo "Waiting for MariaDB..."
-while ! mariadb -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1" &>/dev/null; do
+until mariadb -h"$MYSQL_HOST" -u"$MYSQL_USER" --password="$MYSQL_PASSWORD" -e "SELECT 1" &>/dev/null; do
+    echo "Waiting for MariaDB..."
     sleep 2
 done
 echo "MariaDB ready."
@@ -11,14 +11,16 @@ echo "MariaDB ready."
 cd /var/www/html
 
 # Download WordPress if not present
-if [ ! -f wp-config.php ]; then
+if [ ! -f wp-load.php ]; then
     echo "Downloading WordPress..."
     wp core download --allow-root
+    if [ ! -f wp-config.php ]; then
     wp config create --allow-root \
         --dbname="$MYSQL_DATABASE" \
         --dbuser="$MYSQL_USER" \
         --dbpass="$MYSQL_PASSWORD" \
         --dbhost="$MYSQL_HOST"
+    fi  
 fi
 
 # Install WordPress if not installed
@@ -27,9 +29,9 @@ if ! wp core is-installed --allow-root 2>/dev/null; then
     wp core install --allow-root \
         --url="https://${DOMAIN_NAME}" \
         --title="Inception" \
-        --admin_user="${WP_ADMIN_USER:-ayelasef}" \
-        --admin_password="${WP_ADMIN_PASS:-ayelasef@123}" \
-        --admin_email="${WP_ADMIN_EMAIL:-ayelasef@${DOMAIN_NAME}}" \
+        --admin_user="${WP_ADMIN_USER:-maelmahf}" \
+        --admin_password="${WP_ADMIN_PASS:-maelmahf@123}" \
+        --admin_email="${WP_ADMIN_EMAIL:-maelmahf@${DOMAIN_NAME}}" \
         --skip-email
 fi
 

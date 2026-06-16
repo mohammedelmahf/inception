@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-ARG DOMAIN_NAME=localhost
+ARG DOMAIN_NAME=maelmahf.42.fr
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nginx openssl \
