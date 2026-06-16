@@ -1,19 +1,33 @@
 #!/bin/bash
-
 set -e
 
-service mysql start
+chown -R mysql:mysql /var/lib/mysql
 
-mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+if [ ! -f "/var/lib/mysql/.initialized" ]; then
+    echo "Initializing MariaDB..."
+    
+    if [ ! -d "/var/lib/mysql/mysql" ]; then
+        mysql_install_db --user=mysql --datadir=/var/lib/mysql
+    fi
 
-mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+    mysqld --user=mysql &
+    pid=$!
+    
+    while ! mysqladmin ping -h localhost --silent 2>/dev/null; do sleep 1; done
 
-mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
+    mysql -u root <<EOF
+CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+EOF
 
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+    touch /var/lib/mysql/.initialized
+    echo "MariaDB initialized."
+    
+    kill $pid 2>/dev/null || true
+    wait $pid 2>/dev/null || true
+fi
 
-mysql -e "FLUSH PRIVILEGES;"
-
-service mysql stop
-
-exec mysqld_safe
+exec mysqld --user=mysql
