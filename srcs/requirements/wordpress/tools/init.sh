@@ -29,15 +29,15 @@ if ! wp core is-installed --allow-root 2>/dev/null; then
     wp core install --allow-root \
         --url="https://${DOMAIN_NAME}" \
         --title="Inception" \
-        --admin_user="${WP_ADMIN_USER:-maelmahf}" \
-        --admin_password="${WP_ADMIN_PASS:-maelmahf@123}" \
-        --admin_email="${WP_ADMIN_EMAIL:-maelmahf@${DOMAIN_NAME}}" \
+        --admin_user="${WP_ADMIN_USER}" \
+        --admin_password="${WP_ADMIN_PASS}" \
+        --admin_email="${WP_ADMIN_EMAIL}" \
         --skip-email
 fi
 
 # Create second user if it doesn't exist
 if ! wp user get "${WP_USER_USER}" --allow-root &>/dev/null; then
-    wp user create "${WP_USER_USER}" "${WP_USER_EMAIL:-ayman@${DOMAIN_NAME}}" \
+    wp user create "${WP_USER_USER}" "${WP_USER_EMAIL}" \
         --user_pass="${WP_USER_PASS}" --role=editor --allow-root || true
 fi
 
