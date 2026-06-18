@@ -11,7 +11,7 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
@@ -36,7 +36,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
   nginx:
     build:
       context : ./requirements/nginx
@@ -51,7 +51,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
   #Bonus services
   redis:
     build: ./requirements/bonus/redis
@@ -62,7 +62,7 @@ services:
       - redis_data:/data
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
   ftp:
     build: ./requirements/bonus/ftp
@@ -80,7 +80,7 @@ services:
       - "21100-21110:21100-21110"
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
   adminer:
     build: ./requirements/bonus/adminer
@@ -91,7 +91,7 @@ services:
       - "8082:8082"
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
   static-site:
     build: ./requirements/bonus/static-website
@@ -100,19 +100,19 @@ services:
       - "8081:80"
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
-  # portainer:
-  #   build: ./requirements/bonus/portainer
-  #   container_name: portainer
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - portainer_data:/data
-  #   ports:
-  #     - "9001:9000"
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  portainer:
+    build: ./requirements/bonus/portainer
+    container_name: portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - "9001:9000"
+    networks:
+      - inception
+    restart: on-failure
 
 volumes:
   mariadb_data:
@@ -133,12 +133,12 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/redis
-  # portainer_data:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: /home/${USER}/data/portainer
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/portainer
 
 networks:
   inception:
