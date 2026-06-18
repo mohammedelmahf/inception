@@ -82,25 +82,25 @@ services:
       - inception
     restart: unless-stopped
 
-  # adminer:
-  #   build: ./requirements/bonus/adminer
-  #   container_name: adminer
-  #   depends_on:
-  #     - mariadb
-  #   ports:
-  #     - "8082:8082"
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  adminer:
+    build: ./requirements/bonus/adminer
+    container_name: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - "8082:8082"
+    networks:
+      - inception
+    restart: unless-stopped
 
-  # static-site:
-  #   build: ./requirements/bonus/static-site
-  #   container_name: static-site
-  #   ports:
-  #     - "8081:8081"
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  static-site:
+    build: ./requirements/bonus/static-website
+    container_name: static-website
+    ports:
+      - "8081:80"
+    networks:
+      - inception
+    restart: unless-stopped
 
   # portainer:
   #   build: ./requirements/bonus/portainer
