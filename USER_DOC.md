@@ -1,8 +1,4 @@
-Here are clean **ready-to-use templates** for your project documentation (42 Inception-style). You can directly copy them into your repo.
-
----
-
-# 📘 USER_DOC.md
+# 📘 User Guide
 
 ## 🧭 Overview
 

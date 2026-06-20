@@ -1,5 +1,5 @@
 
-# 🧑‍💻 DEV_DOC.md
+# 🧑‍💻 Developer Documentation
 
 ## ⚙️ Prerequisites
 
@@ -24,6 +24,9 @@ srcs/
  │    └── mariadb/
 Makefile
 ```
+---
+
+---
 
 ---
 
