@@ -85,6 +85,8 @@ Or:
 ```
 https://maelmahf.42.fr
 ```
+---
+
 # 🔍 Technical Choices
 ### VMs Vs Containers
 
