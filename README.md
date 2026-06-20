@@ -7,14 +7,14 @@
 
 The **Inception** Project is a sophisticated web infrastructure, all running on the same Docker network, orchestrated using Docker and Docker Compose.NGINX manages incoming web traffic, serving static files directly and forwarding dynamic content requests to PHP-FPM, which processes PHP code from Word Press. WordPress uses Redis for caching frequently accessed data, enhancing performance by reducing database queries to MariaDB, which handles all content data storage and management. After PHP-FPM processes the request and retrieves data from Redis and MariaDB, the content is returned to NGINX for delivery to the user. Additionally, NGINX serves a Static Website for direct content delivery. Adminer provides database management for MariaDB, and Portainer oversees and monitors the Docker containers running these services. Docker volumes ensure persistent storage and efficient data management, all within a unified Docker network that facilitates seamless communication and operation across the entire system.
 
-This infrastructure includes:
+### This infrastructure includes:
 
-🐬 MariaDB (Database server)
-🌐 WordPress (CMS)
-⚡ Redis (Caching system)
-🔐 Nginx (Reverse proxy with TLS)
-📦 Docker Volumes (Persistent storage)
-🌐 Custom Docker Network (Service communication)
+- 🐬 MariaDB (Database server)
+- 🌐 WordPress (CMS)
+- ⚡ Redis (Caching system)
+- 🔐 Nginx (Reverse proxy with TLS)
+- 📦 Docker Volumes (Persistent storage)
+- 🌐 Custom Docker Network (Service communication)
 
 The project helps understand containerization, service isolation, networking, persistent storage, and secure system design.
 
