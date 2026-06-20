@@ -19,10 +19,14 @@ srcs/
  ├── docker-compose.yml
  ├── .env
  ├── requirements/
+ |    ├── bonus/
  │    ├── nginx/
  │    ├── wordpress/
  │    └── mariadb/
 Makefile
+README.md
+DEV_DOC.md
+USER_DOC.md
 ```
 ---
 
