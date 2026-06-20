@@ -100,10 +100,15 @@ https://maelmahf.42.fr
 
 
 ## 🔐 Secrets vs Environment Variables
-Secrets	Environment Variables
-Encrypted storage	Plain text
-Safer for production	Easier for development
-Hidden from inspect	Visible in container metadata
+| **Aspect**          | **Environment Variables**                             | **Secrets**                                             |
+| ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| **Purpose**         | Store configuration data (non-sensitive)              | Store sensitive data (passwords, API keys, tokens)      |
+| **Security Level**  | Low security, can be exposed in logs or process lists | High security, encrypted and access-controlled          |
+| **Storage**         | Plain text in runtime environment or `.env` files     | Stored in secure vaults or secret managers              |
+| **Access Control**  | Accessible by the running process                     | Strict access policies (role-based access, permissions) |
+| **Best Use Cases**  | App config like port, mode, feature flags             | Database passwords, JWT keys, TLS certificates          |
+| **Risk if Exposed** | Medium impact (depends on data)                       | High impact (system compromise possible)                |
+| **Rotation**        | Manual / less frequent                                | Designed for easy rotation and lifecycle management     |
 
 This project uses .env files, but production systems should use Docker Secrets.
 
