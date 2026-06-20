@@ -32,50 +32,70 @@ The project helps understand containerization, service isolation, networking, pe
               ┌────────┴────────┐
               ▼                 ▼
           MariaDB             Redis
-Overview
-Each service runs in a separate container.
-Containers communicate through a Docker bridge network.
-Only Nginx is exposed to the host machine.
-MariaDB and Redis remain internal (not exposed).
-Data is persisted using Docker volumes.
-⚙️ Instructions
-🔧 Requirements
-Docker
-Docker Compose plugin
-Linux-based system (recommended)
-Make
-🚀 Build & Run
+## Overview
+- Each service runs in a separate container.
+- Containers communicate through a Docker bridge network.
+- Only Nginx is exposed to the host machine.
+- MariaDB and Redis remain internal (not exposed).
+- Data is persisted using Docker volumes.
+# ⚙️ Instructions
+## 🔧 Requirements
+- Docker
+- Docker Compose plugin
+- Linux-based system (recommended)
+- Make
+## 🚀 Build & Run
 
 From the root directory:
 
+```bash
 make
+```
 
 Or manually:
 
+```bash
 cd srcs
 docker-compose up --build -d
-🛑 Stop the Project
+```
+
+---
+
+## 🛑 Stop the Infrastructure
+
+```bash
 make down
-🧹 Clean Everything
+```
+
+---
+
+## 🧹 Remove Everything (Containers, Images, Volumes)
+
+```bash
 make fclean
-🌍 Access the Website
+```
+## 🌍 Access the Website
 
 After running the project:
 
+```
 https://localhost
-
+```
 Or:
-
+```
 https://maelmahf.42.fr
-🔍 Technical Choices
-🐳 Docker vs Virtual Machines
-Virtual Machines	Docker
-Full OS per VM	Shares host kernel
-Heavy	Lightweight
-Slow boot	Fast startup
-Hardware-level isolation	Process-level isolation
+```
+# 🔍 Technical Choices
+### VMs Vs Containers
 
-Docker is more efficient for microservice architecture and DevOps workflows.
+| **Aspect**                  | **Virtual Machines (VMs)**                                   | **Containers**                                             |
+|-----------------------------|---------------------------------------------------------------|------------------------------------------------------------|
+| **OS**                      | Full OS (includes application and dependencies)              | Shares host OS kernel (includes only application and dependencies) |
+| **Isolation**               | Strong isolation, each VM is a separate environment          | Moderate isolation, containers share the same OS kernel   |
+| **Resource Usage**          | More resource-intensive, needs separate OS for each VM       | Lightweight, uses fewer resources                          |
+| **Boot Time**               | Longer boot time due to full OS initialization                | Fast startup, often in seconds                             |
+| **Use Cases**               | Suitable for running different OS or strong isolation needs   | Ideal for microservices, CI/CD, and scalable applications  |
+
 
 ## 🔐 Secrets vs Environment Variables
 Secrets	Environment Variables
@@ -102,11 +122,12 @@ Production friendly	Development friendly
 Persistent data is stored using Docker named volumes.
 
 ## 🔒 Security
-TLS enabled via Nginx (HTTPS only)
-Only port 443 exposed
-Internal services isolated (MariaDB, Redis)
-Minimal Alpine/Debian base images
-Environment variables used for configuration
+- TLS enabled via Nginx (HTTPS only)
+- Only port 443 exposed
+- Internal services isolated (MariaDB, Redis)
+- Minimal Alpine/Debian base images
+- Environment variables used for configuration
+
 ## Resources
 
 - [VM vs Containers: Understanding the Differences](https://www.backblaze.com/blog/vm-vs-containers/)
@@ -118,12 +139,13 @@ Environment variables used for configuration
 
 All generated content has been reviewed and understood.
 
-🎯 Learning Outcomes
-Docker containerization
-Multi-service orchestration
-Networking between containers
-Secure infrastructure setup
-DevOps fundamentals
-👤 Author
+## 🎯 Learning Outcomes
+- Docker containerization
+- Multi-service orchestration
+- Networking between containers
+- Secure infrastructure setup
+- DevOps fundamentals
 
-Login: maelmahf
+#👤 Author
+
+**Login**: maelmahf
