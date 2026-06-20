@@ -113,18 +113,32 @@ https://maelmahf.42.fr
 This project uses .env files, but production systems should use Docker Secrets.
 
 ## 🌐 Docker Network vs Host Network
-Bridge Network	Host Network
-Isolated	Shares host network
-Secure	Less secure
-Container name DNS	Direct host access
+| **Aspect**            | **Docker Bridge/Custom Network**                          | **Host Network**                                      |
+| --------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
+| **Definition**        | Containers get their own virtual network (isolated)       | Container shares the host machine’s network directly  |
+| **Isolation**         | High isolation between host and containers                | No network isolation (fully exposed to host network)  |
+| **IP Addressing**     | Each container gets its own private IP                    | Uses host IP directly (no separate container IP)      |
+| **Port Mapping**      | Requires `-p hostPort:containerPort`                      | No port mapping needed                                |
+| **Security**          | Safer, controlled exposure of services                    | Less secure, services are directly exposed            |
+| **Performance**       | Slight overhead due to virtual networking                 | Slightly faster (no network virtualization layer)     |
+| **Use Cases**         | Microservices, production setups, Docker Compose projects | High-performance networking, low-latency applications |
+| **Flexibility**       | Highly configurable (multiple networks, subnets, DNS)     | Very limited configuration                            |
+| **Service Discovery** | Built-in DNS between containers                           | No Docker DNS resolution                              |
 
 A custom bridge network is used in this project.
 
 ## 💾 Volumes vs Bind Mounts
-Volumes	Bind Mounts
-Managed by Docker	Managed by host
-Portable	Host dependent
-Production friendly	Development friendly
+| **Aspect**             | **Docker Volumes**                                        | **Bind Mounts**                                        |
+| ---------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| **Definition**         | Managed storage created and handled by Docker             | Direct mapping of a host file/directory into container |
+| **Storage Location**   | Stored in Docker’s internal directory (`/var/lib/docker`) | Any location on the host filesystem                    |
+| **Management**         | Fully managed by Docker                                   | Managed manually by the user                           |
+| **Portability**        | High (works across systems and environments)              | Low (depends on host file structure)                   |
+| **Performance**        | Optimized for Docker workloads                            | Slightly faster for direct file access in some cases   |
+| **Security**           | Safer (isolated from host structure)                      | Less safe (direct access to host files)                |
+| **Best Use Cases**     | Databases, persistent app data (MySQL, WordPress, etc.)   | Development, live code editing, debugging              |
+| **Backup & Migration** | Easy to backup and move                                   | Harder (must manually manage host paths)               |
+| **Docker Control**     | Docker fully controls lifecycle                           | User controls everything                               |
 
 Persistent data is stored using Docker named volumes.
 
@@ -153,6 +167,6 @@ All generated content has been reviewed and understood.
 - Secure infrastructure setup
 - DevOps fundamentals
 
-#👤 Author
+# 👤 Author
 
 **Login**: maelmahf
