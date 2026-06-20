@@ -4,7 +4,7 @@ FROM alpine:3.18
 # Install Nginx
 RUN apk add --no-cache nginx
 
-# Create necessary directories and user
+# Create necessary dir and user
 RUN mkdir -p /var/www/static /var/run/nginx && \
 	addgroup -S nginx 2>/dev/null || true && \
 	adduser -S -G nginx nginx 2>/dev/null || true

@@ -1,6 +1,4 @@
 #!/bin/sh
-
-# Redis startup script with environment variable support
 exec redis-server \
 	--dir /data \
 	--bind 0.0.0.0 \
