@@ -18,7 +18,7 @@ This infrastructure includes:
 
 The project helps understand containerization, service isolation, networking, persistent storage, and secure system design.
 
-## 🏗️ Project Architecture
+### 🏗️ Project Architecture
                 ┌──────────────┐
                 │    NGINX     │
                 │ Reverse Proxy│
@@ -32,14 +32,17 @@ The project helps understand containerization, service isolation, networking, pe
               ┌────────┴────────┐
               ▼                 ▼
           MariaDB             Redis
-## Overview
+### Overview
 - Each service runs in a separate container.
 - Containers communicate through a Docker bridge network.
 - Only Nginx is exposed to the host machine.
 - MariaDB and Redis remain internal (not exposed).
 - Data is persisted using Docker volumes.
-# ⚙️ Instructions
-## 🔧 Requirements
+
+---
+
+## ⚙️ Instructions
+### 🔧 Requirements
 - Docker
 - Docker Compose plugin
 - Linux-based system (recommended)
@@ -87,8 +90,8 @@ https://maelmahf.42.fr
 ```
 ---
 
-# 🔍 Technical Choices
-### VMs Vs Containers
+### 🔍 Technical Choices
+#### VMs Vs Containers
 
 | **Aspect**                  | **Virtual Machines (VMs)**                                   | **Containers**                                             |
 |-----------------------------|---------------------------------------------------------------|------------------------------------------------------------|
@@ -99,7 +102,7 @@ https://maelmahf.42.fr
 | **Use Cases**               | Suitable for running different OS or strong isolation needs   | Ideal for microservices, CI/CD, and scalable applications  |
 
 
-## 🔐 Secrets vs Environment Variables
+#### 🔐 Secrets vs Environment Variables
 | **Aspect**          | **Environment Variables**                             | **Secrets**                                             |
 | ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
 | **Purpose**         | Store configuration data (non-sensitive)              | Store sensitive data (passwords, API keys, tokens)      |
@@ -112,7 +115,7 @@ https://maelmahf.42.fr
 
 This project uses .env files, but production systems should use Docker Secrets.
 
-## 🌐 Docker Network vs Host Network
+#### 🌐 Docker Network vs Host Network
 | **Aspect**            | **Docker Bridge/Custom Network**                          | **Host Network**                                      |
 | --------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
 | **Definition**        | Containers get their own virtual network (isolated)       | Container shares the host machine’s network directly  |
@@ -127,7 +130,7 @@ This project uses .env files, but production systems should use Docker Secrets.
 
 A custom bridge network is used in this project.
 
-## 💾 Volumes vs Bind Mounts
+#### 💾 Volumes vs Bind Mounts
 | **Aspect**             | **Docker Volumes**                                        | **Bind Mounts**                                        |
 | ---------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
 | **Definition**         | Managed storage created and handled by Docker             | Direct mapping of a host file/directory into container |
@@ -142,12 +145,14 @@ A custom bridge network is used in this project.
 
 Persistent data is stored using Docker named volumes.
 
-## 🔒 Security
+### 🔒 Security
 - TLS enabled via Nginx (HTTPS only)
 - Only port 443 exposed
 - Internal services isolated (MariaDB, Redis)
 - Minimal Alpine/Debian base images
 - Environment variables used for configuration
+
+---
 
 ## Resources
 
