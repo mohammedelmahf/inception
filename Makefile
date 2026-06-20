@@ -43,8 +43,6 @@ down:
 	@echo "Stopping stack"
 	$(COMPOSE) down
 
-re: fclean prepare up
-
 ps:
 	$(COMPOSE) ps
 
@@ -69,22 +67,3 @@ cert-install:
 	@docker cp nginx:/etc/ssl/certs/server.crt /tmp/maelmahf.crt || (echo "failed to copy cert"; exit 1)
 	@echo "Installing certificate to system trust store (requires sudo)"
 	@sudo cp /tmp/maelmahf.crt /usr/local/share/ca-certificates/maelmahf.crt && sudo update-ca-certificates || (echo "failed to install cert"; exit 1)
-
-# .PHONY: bonus
-# bonus:
-# 	@echo "Running bonus smoke tests..."
-# 	$(COMPOSE) up -d --build
-# 	@sleep 3
-# 	@echo "-- Services --"
-# 	$(COMPOSE) ps
-# 	@echo "-- Home (first 10 lines) --"
-# 	@curl -ksS --resolve $(DOMAIN):443:127.0.0.1 https://$(DOMAIN)/ | sed -n '1,10p' || true
-# 	@echo "-- WP Login (first 20 lines) --"
-# 	@curl -ksS --resolve $(DOMAIN):443:127.0.0.1 https://$(DOMAIN)/wp-login.php | sed -n '1,20p' || true
-# 	@echo "-- Attempt login (cookies saved to /tmp/cookies) --"
-# 	@/usr/bin/curl -ksS --resolve $(DOMAIN):443:127.0.0.1 -c /tmp/cookies -d "log=maelmahf&pwd=mohammedelmahfoudi@1234&wp-submit=Log+In&redirect_to=https://$(DOMAIN)/wp-admin/&testcookie=1" -i -L https://$(DOMAIN)/wp-login.php | sed -n '1,40p' || true
-# 	@echo "-- WP Admin (first 20 lines) --"
-# 	@/usr/bin/curl -ksS --resolve $(DOMAIN):443:127.0.0.1 -b /tmp/cookies https://$(DOMAIN)/wp-admin/ | sed -n '1,20p' || true
-# 	@echo "-- Volumes --"
-# 	@docker volume ls | grep srcs_ || true
-# 	@echo "Bonus smoke tests completed."
