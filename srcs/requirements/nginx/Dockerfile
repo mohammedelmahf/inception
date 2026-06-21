@@ -1,20 +1,20 @@
-FROM debian:bullseye
+    FROM debian:bullseye
 
-ARG DOMAIN_NAME
+    ARG DOMAIN_NAME
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    nginx openssl \
-    && rm -rf /var/lib/apt/lists/*
+    RUN apt-get update && apt-get install -y --no-install-recommends \
+        nginx openssl \
+        && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /etc/ssl/private /etc/ssl/certs \
-    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-       -keyout /etc/ssl/private/server.key \
-       -out /etc/ssl/certs/server.crt \
-       -subj "/CN=${DOMAIN_NAME}"
+    RUN mkdir -p /etc/ssl/private /etc/ssl/certs \
+        && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout /etc/ssl/private/server.key \
+        -out /etc/ssl/certs/server.crt \
+        -subj "/CN=${DOMAIN_NAME}"
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-RUN sed -i "s/DOMAIN_NAME_PLACEHOLDER/${DOMAIN_NAME}/g" /etc/nginx/nginx.conf
+    COPY conf/nginx.conf /etc/nginx/nginx.conf
+    RUN sed -i "s/DOMAIN_NAME_PLACEHOLDER/${DOMAIN_NAME}/g" /etc/nginx/nginx.conf
 
-EXPOSE 443
+    EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"]
+    CMD ["nginx", "-g", "daemon off;"]
